@@ -10,13 +10,6 @@
 	$_STEAMAPI = $config['steam_api_key'];
 	require ("classes/base.class.php");
 
-	define('LANGUAGES_PATH', ROOT . '/langs'); 
-	putenv("LC_ALL=" . $locale); 
-	setlocale(LC_ALL, $locale, $locale); 
-	bind_textdomain_codeset($locale, 'UTF-8'); 
-	bindtextdomain($locale, LANGUAGES_PATH); 
-	textdomain($locale);
-
 	if (isset($_GET['page'])) $lnk = explode('/', $_GET['page']);
 
 	Base::DetectTimeZone();

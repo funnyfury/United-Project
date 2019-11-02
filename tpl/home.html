@@ -1,107 +1,110 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Edited - Главная</title>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Edited - Главная</title>
 
-  <!-- CSS  -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="../dist/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-  <link href="../dist/css/custom.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-</head>
-<body style="min-height:100hv;">
-  <nav class="white" role="navigation">
-    <div class="nav-wrapper container white">
-      <a id="logo-container" href="/" class="brand-logo">Главная</a>
-      <ul class="right hide-on-med-and-down">
-        <li><a href="/news">Новости</a></li>
-        <li><a href="/players">Игроки</a></li>
-        <li><a href="/servers">Сервера</a></li>
-        <li><a href="/bans">Блокировки</a></li>
-      </ul>
-      <ul id="nav-mobile" class="sidenav">
-        <li><a href="/news">Новости</a></li>
-        <li><a href="/players">Игроки</a></li>
-        <li><a href="/servers">Сервера</a></li>
-        <li><a href="/bans">Блокировки</a></li>
-      </ul>
-      <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-    </div>
-  </nav>
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="../dist/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="../dist/css/custom.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  </head>
+  <body>
+    <nav class="white" role="navigation">
+      <div class="nav-wrapper container white">
+        <a id="logo-container" href="/" class="brand-logo">Главная</a>
+        <ul class="right hide-on-med-and-down">
+          <li><a href="/news">Новости</a></li>
+          <li><a href="/players">Игроки</a></li>
+          <li><a href="/servers">Сервера</a></li>
+          <li><a href="/bans">Блокировки</a></li>
+        </ul>
+        <ul id="nav-mobile" class="sidenav">
+          <li><a href="/news">Новости</a></li>
+          <li><a href="/players">Игроки</a></li>
+          <li><a href="/servers">Сервера</a></li>
+          <li><a href="/bans">Блокировки</a></li>
+        </ul>
+        <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+      </div>
+    </nav>
 
-  <div id="index-banner" class="parallax-container">
-    <div class="section no-pad-bot">
+    <main>
+      <div id="index-banner" class="parallax-container">
+        <div class="section no-pad-bot">
+          <div class="container">
+            <br><br>
+            <h1 class="header center teal-text text-lighten-2">Edited</h1>
+            <div class="row center">
+              <h5 class="header col s12 light">Команда разработчиков, которая старается создать объединенное комьюнити для игроков Metrostroi</h5>
+            </div>
+            <?php if($logged_user) { ?>  
+            <div class="row center">
+              <a href="/news" id="download-button" class="btn-large waves-effect waves-light teal lighten-1">Вперед</a>
+            </div>
+            <?php } else { ?>
+            <div class="row center">
+              <a href="/login?login&rdrct=<?php echo htmlspecialchars($_GET['page'])?>" id="download-button" class="btn-large waves-effect waves-light teal lighten-1">Авторизоваться</a>
+            </div>
+            <?php } ?>
+            <br><br>
+          </div>
+        </div>
+        <div class="parallax"><img src="/tpl/img/background_old.png" alt="Unsplashed background img 1"></div>
+      </div>
+
+
       <div class="container">
-        <br><br>
-        <h1 class="header center teal-text text-lighten-2">Edited</h1>
-        <div class="row center">
-          <h5 class="header col s12 light">Команда разработчиков, которая старается создать объединенное комьюнити для игроков Metrostroi</h5>
+        <div class="section">
+          <div class="row">
+            <div class="col s12 m4">
+              <div class="promo">
+                <i class="material-icons">train</i>
+                <h5 class="header">Стабильная работа</h5>
+                <p class="content">Наши сервера работают 24/7 для того, чтобы в любое время игрок мог зайти на сервер и сесть за управление ЭПС.</p>
+              </div>
+            </div>
+
+            <div class="col s12 m4">
+              <div class="promo">
+                <i class="material-icons">group</i>
+                <h5 class="header">Опыт работы</h5>
+                <p class="content">Хоть этот проект и новый, но у нас есть опыт в работе с комьюнити Metrostroi, а также стараемся понять, что они хотят от проекта.</p>
+              </div>
+            </div>
+
+            <div class="col s12 m4">
+              <div class="promo">
+                <i class="material-icons">star</i>
+                <h5 class="header">Понятный интерфейс</h5>
+                <p class="content">Мы используем современный дизайн, который удобен, прост и понятен каждому. Также на сайте имеются подсказки.</p>
+              </div>
+            </div>
+          </div>
         </div>
-        <?php if($logged_user) { ?>  
-        <div class="row center">
-          <a href="/news" id="download-button" class="btn-large waves-effect waves-light teal lighten-1">Вперед</a>
         </div>
-        <?php } else { ?>
-        <div class="row center">
-          <a href="/login?login&rdrct=<?php echo htmlspecialchars($_GET['page'])?>" id="download-button" class="btn-large waves-effect waves-light teal lighten-1">Авторизоваться</a>
-        </div>
-        <?php } ?>
-        <br><br>
       </div>
-    </div>
-    <div class="parallax"><img src="/tpl/img/background_old.png" alt="Unsplashed background img 1"></div>
-  </div>
+    </main>
 
-
-  <div class="container">
-    <div class="section">
-      <div class="row">
-        <div class="col s12 m4">
-          <div class="promo">
-            <i class="material-icons">train</i>
-            <h5 class="header">Стабильная работа</h5>
-            <p class="content">Наши сервера работают 24/7 для того, чтобы в любое время игрок мог зайти на сервер и сесть за управление ЭПС.</p>
-          </div>
-        </div>
-
-        <div class="col s12 m4">
-          <div class="promo">
-            <i class="material-icons">group</i>
-            <h5 class="header">Опыт работы</h5>
-            <p class="content">Хоть этот проект и новый, но у нас есть опыт в работе с комьюнити Metrostroi, а также стараемся понять, что они хотят от проекта.</p>
-          </div>
-        </div>
-
-        <div class="col s12 m4">
-          <div class="promo">
-            <i class="material-icons">star</i>
-            <h5 class="header">Понятный интерфейс</h5>
-            <p class="content">Мы используем современный дизайн, который удобен, прост и понятен каждому. Также на сайте имеются подсказки.</p>
+    <footer class="page-footer teal">
+      <div class="container">
+        <div class="row">
+          <div class="col l6 s12">
+            <h5 class="white-text">Команда United</h5>
+            <p class="grey-text text-lighten-4">Все файлы, фото и видео материалы пренадлежат команде United. За копирование информации с сайта (как частично, так и полностью) будут применены санкции.</p>
           </div>
         </div>
       </div>
-    </div>
-    </div>
-  </div>
+    </footer>
 
-  <footer class="page-footer teal">
-    <div class="container">
-      <div class="row">
-        <div class="col l6 s12">
-          <h5 class="white-text">Команда United</h5>
-          <p class="grey-text text-lighten-4">Все файлы, фото и видео материалы пренадлежат команде United. За копирование информации с сайта ( как частично, так и полностью ) будут применены санкции.</p>
+    <!--  Scripts-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="../dist/js/materialize.min.js"></script>
+    <!--script type="text/javascript" src="../dist/init.js"></script-->
 
-
-        </div>
-      </div>
-    </div>
-  </footer>
-
-
-  <!--  Scripts-->
-  <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-  <script type="text/javascript" src="../dist/js/materialize.min.js"></script>
-  <!--script type="text/javascript" src="../dist/init.js"></script-->
+    <script>
+      $('.parallax').parallax();
+    </script>
   </body>
 </html>

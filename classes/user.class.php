@@ -21,7 +21,7 @@ class User {
 	 * @param string $type - which parameter we send
 	 * @return User
 	 */
-	public function User($arg, $type = 'id') {
+	public function __construct($arg, $type = 'id') {
 		global $db;
 		global $servers;
 		$arg = $db->safe($arg);

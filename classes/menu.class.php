@@ -1,7 +1,7 @@
 <?php
 class Menu {
 	private $menu;
-	public function Menu() {
+	public function __construct() {
 		$this->menu = array(
 			'news' => array(
 				'url'=>'/news',

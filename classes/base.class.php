@@ -78,11 +78,6 @@ class Base {
 			'icon'=>'wrench',
 		),
 	);
-	public static $langs = array(
-		'ru_RU' => array('Русский язык','ru'),
-		'uk_UA' => array('Українська мова','ua'),
-		'en_US' => array('English language','us')
-	);
 	public static function ToCommunityID($id) {
 		if (preg_match('/^STEAM_/', $id)) {
 			$parts = explode(':', $id);
@@ -251,11 +246,11 @@ class Base {
 	}
 	
 	
-	public static function GetRealIP()
-	{
+	public static function GetRealIP() {
 		return $_SERVER['HTTP_X_REAL_IP']; //Ну вот так надо
 	}
 }
+
 Base::$ICONS[-1]['name'] = _('Недоверенный игрок');
 Base::$ICONS[1]['name'] = _('Заслуженный игрок');
 Base::$ICONS[2]['name'] = _('Доверенный игрок');

@@ -19,7 +19,7 @@ Class DB {
 	 * @param int $port - database server port
 	 * @param string $method - connect method; only 'mysql' or 'mysqli'
 	 */
-	public function DB($database, $host, $user, $password = '', $port = 3306, $method = 'mysqli') {
+	public function __construct($database, $host, $user, $password = '', $port = 3306, $method = 'mysqli') {
 		$this->database = $database;
 		$this->host = $host;
 		$this->login = $user;
