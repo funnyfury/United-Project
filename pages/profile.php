@@ -7,6 +7,81 @@ if ($pl->uid() < 1) {
 
 Base::TakeClass('comments');
 
+if ($_POST) {
+    $f_err     = 0; //вспомогательная переменная
+    $types     = array(
+        '.jpg',
+        '.JPG',
+        '.jpeg',
+        '.gif',
+        '.bmp',
+        '.png'
+    ); //поддерживаемые форматы загружаемых файлов
+    $max_size  = 5020500; //максимальный размер загружаемого файла (5000-МБ)
+    $path      = ROOT . "/tpl/img/avatars/"; //директория для загрузки
+    $path_mini = ROOT . "/tpl/img/avatars/thumb/"; //директория для загрузки миниатюры
+    $path_mini1 = "/tpl/img/avatars/"; //директория для загрузки миниатюры
+    $fname     = $_FILES['file']['name'];
+    $ext       = substr($fname, strpos($fname, '.'), strlen($fname) - 1); //определяем тип загружаемого файла
+
+    //проверка на соответствие формата
+    if (!in_array($ext, $types)) {
+        $f_err++;
+        $mess = '<p style="color:red;">Загружаемый файл не является картинкой</p>';
+    }
+
+    //проверка размера файла
+    if (filesize($_FILES['file']['tmp_name']) > $max_size) {
+        $f_err++;
+        $mess = '<p style="color:red;">Размер загружаемой картинки превышает 5 Mb</p>';
+    }
+
+    //если файл успешно прошел проверку
+    //перемещаем его в заданную директорию из временной
+    if ($f_err == 0) {
+        move_uploaded_file($_FILES['file']['tmp_name'], $path . $fname);
+
+        //путь к загруженному файлу
+        $source_src = $path . $fname;
+
+        //создаем путь и имя миниатюры
+        $new_name     = md5($fname) . $ext;
+        $resource_src = $path . $new_name;
+
+        //получаем параметры загруженного файла
+        $params = getimagesize($source_src);
+
+        switch ($params[2]) {
+            case 1:
+                $source = imagecreatefromgif($source_src);
+                break;
+            case 2:
+                $source = imagecreatefromjpeg($source_src);
+                break;
+        }
+
+        //назначаем права доступа
+        chmod("$source_src", 0644);
+        chmod("$resource_src", 0644);
+
+        //выводим сообщение
+        $mess = '<center><br><p style="color:green;">Изображение загружено !</p></center>';
+        $ok   = 1;
+    }
+}
+if ($_POST['submit']) {
+	$file = "https://metrostroi.site". $path_mini1 . $fname; // получить путь вида '/img/avatars/15.jpg'
+	if ($new_name) {
+		$db->execute("UPDATE user_info_cache SET avatar_url = '$file' WHERE steamid = 'STEAM_0:0:138268647'"); //Добавление в БД.
+	}
+}
+
+$friendsq = $db->execute("SELECT * FROM `players` WHERE `SID` = $pl->steamid()");
+
+$friends1 = $db->fetch_array($friendsq);
+
+$friends = json_decode($friends1['friends']);
+
 $group_names = array();
 $steamid = (isset($lnk[1]))? $lnk[1]: "";
 $groups_options = '';
@@ -62,7 +137,7 @@ if ($logged_user and isset($_POST['submit']) and isset($_POST['reason']) and str
 				break;
 			Logger::Log(5, 0, '', '', $logged_user->steamid(),$pl->steamid());
 			$db->execute("INSERT INTO `violations` (`SID`, `date`, `admin`, `server`, `violation`)"
-				. " VALUES('{$pl->steamid()}', " . time() . ", '{$logged_user->steamid()}', 'Сайт Метростроя', '{$db->safe($_POST['reason'])}')");
+				. " VALUES('{$pl->steamid()}', " . time() . ", '{$logged_user->steamid()}', 'БД Novostroi', '{$db->safe($_POST['reason'])}')");
 			break;
 		case 'add_icon':
 			if (!$logged_user->take_group_info("admin_panel") or !isset($_POST['icon']))
@@ -106,9 +181,9 @@ if ($logged_user and isset($_POST['submit']) and isset($_POST['reason']) and str
 			$db->execute("UPDATE `players` SET `status`='{$db->safe(json_encode($status))}'$add WHERE `id`={$pl->uid()}");
 			$vio = "\nОтобран " . Base::$COUPON_INFO[$pl->take_coupon_info('nom')] . " талон, выдан "  . Base::$COUPON_INFO[($pl->take_coupon_info('nom')) % 3 + 1] . ".";
 			$db->execute("INSERT INTO `violations` (`SID`, `date`, `admin`, `server`, `violation`)"
-				. " VALUES('{$pl->steamid()}', " . time() . ", '{$logged_user->steamid()}', 'Сайт Метростроя', '{$db->safe($_POST['reason'] . $vio)}')");
+				. " VALUES('{$pl->steamid()}', " . time() . ", '{$logged_user->steamid()}', 'БД Novostroi', '{$db->safe($_POST['reason'] . $vio)}')");
 			if ($pl->take_coupon_info('nom') == 3) $db->execute("INSERT INTO `examinfo` (`SID`, `date`, `rank`, `examiner`, `note`, `type`, `server`)"
-				. " VALUES ('{$pl->steamid()}', " . time() . ", 'user', 'SYSTEM', '{$logged_user->take_steam_info('nickname')}({$logged_user->steamid()}) отобрал красный талон.\n УВОЛЕН!', 2, 'Сайт Метростроя')");
+				. " VALUES ('{$pl->steamid()}', " . time() . ", 'user', 'SYSTEM', '{$logged_user->take_steam_info('nickname')}({$logged_user->steamid()}) отобрал красный талон.\n УВОЛЕН!', 2, 'БД Novostroi')");
 			$pl = new User($pl->steamid(), 'SID');
 			break;
 		case 'test':
@@ -120,7 +195,7 @@ if ($logged_user and isset($_POST['submit']) and isset($_POST['reason']) and str
 				$db->execute("INSERT INTO `tests_results` (`status`, `student`, `questions`, `trname`, `recived_date`) "
 					. "VALUES (0, '{$pl->steamid()}', '{$db->safe($test[0])}', '{$db->safe($test[1])}', NOW())") or die($db->error());
 			}
-//			$pl = new User($pl->steamid(), 'SID');
+			$pl = new User($pl->steamid(), 'SID');
 			break;
 		case 'up':
 			if (!($logged_user->take_group_info("up_down") and in_array($pl->take_group_info('txtid'), Base::$GROUPS_UP_DOWN) and array_search($pl->take_group_info('txtid'), Base::$GROUPS_UP_DOWN) != 4))
@@ -129,8 +204,7 @@ if ($logged_user and isset($_POST['submit']) and isset($_POST['reason']) and str
 			Logger::Log(1, 0, '', array('rank'=>$new_gr), $logged_user->steamid(),$pl->steamid());
 			$db->execute("UPDATE `players` SET `group`='$new_gr' WHERE `id`={$pl->uid()}");
 			$db->execute("INSERT INTO `examinfo` (`SID`, `date`, `rank`, `examiner`, `note`, `type`, `server`)"
-				. " VALUES ('{$pl->steamid()}', " . time() . ", '$new_gr', '{$logged_user->steamid()}', '{$db->safe($_POST['reason'])}', 1, 'Сайт Метростроя')");
-			Base::SendToSocket('notify',array('what'=>'exam','examiner'=>$db->safe($logged_user->steamid()),'time'=>time()));
+				. " VALUES ('{$pl->steamid()}', " . time() . ", '$new_gr', '{$logged_user->steamid()}', '{$db->safe($_POST['reason'])}', 1, 'БД Novostroi')");
 			$pl = new User($pl->steamid(), 'SID');
 			break;
 		case 'down':
@@ -140,7 +214,7 @@ if ($logged_user and isset($_POST['submit']) and isset($_POST['reason']) and str
 			Logger::Log(2, 0, '', array('rank'=>$new_gr), $logged_user->steamid(),$pl->steamid());
 			$db->execute("UPDATE `players` SET `group`='$new_gr' WHERE `id`={$pl->uid()}");
 			$db->execute("INSERT INTO `examinfo` (`SID`, `date`, `rank`, `examiner`, `note`, `type`, `server`)"
-				. " VALUES ('{$pl->steamid()}', " . time() . ", '$new_gr', '{$logged_user->steamid()}', '{$db->safe($_POST['reason'])}', 2, 'Сайт Метростроя')");
+				. " VALUES ('{$pl->steamid()}', " . time() . ", '$new_gr', '{$logged_user->steamid()}', '{$db->safe($_POST['reason'])}', 2, 'БД Novostroi')");
 			Base::SendToSocket('notify',array('what'=>'exam','examiner'=>$db->safe($logged_user->steamid()),'time'=>time()));
 			$pl = new User($pl->steamid(), 'SID');
 			break;
@@ -150,8 +224,7 @@ if ($logged_user and isset($_POST['submit']) and isset($_POST['reason']) and str
 			Logger::Log(3, 0, '', array('rank'=>$_POST['group']), $logged_user->steamid(),$pl->steamid());
 			$db->execute("UPDATE `players` SET `group`='{$db->safe($_POST['group'])}' WHERE `id`={$pl->uid()}");
 			$db->execute("INSERT INTO `examinfo` (`SID`, `date`, `rank`, `examiner`, `note`, `type`, `server`)"
-				. "VALUES ('{$db->safe($pl->steamid())}'," . time() . ",'{$db->safe($_POST['group'])}','{$logged_user->steamid()}','{$db->safe($_POST['reason'])}',4,'Сайт Метростроя')");
-			Base::SendToSocket('notify',array('what'=>'exam','examiner'=>$db->safe($logged_user->steamid()),'time'=>time()));
+				. "VALUES ('{$db->safe($pl->steamid())}'," . time() . ",'{$db->safe($_POST['group'])}','{$logged_user->steamid()}','{$db->safe($_POST['reason'])}',4,'БД Novostroi')");
 			$pl = new User($pl->steamid(), 'SID');
 			break;
 		case 'report':
@@ -160,7 +233,7 @@ if ($logged_user and isset($_POST['submit']) and isset($_POST['reason']) and str
 			$_POST['server'] = (int) $_POST['server'];
 			if (!isset($servers[$_POST['server']]) or !$servers[$_POST['server']]['active'] or !$servers[$_POST['server']]['show_for_everyone'] or $servers[$_POST['server']]['deleted']) break;
 			$db->execute("INSERT INTO `mag_reports` (`mag_rserver`,`mag_rserver_id`,`mag_reason`,`mag_reporter`,`mag_badpl`,`mag_rdate`) VALUES ('{$db->safe($servers[$_POST['server']]['name'])}', '{$_POST['server']}', '{$db->safe($_POST['reason'])}', '{$logged_user->steamid()}', '{$pl->steamid()}', NOW())");
-//			$pl = new User($pl->steamid(), 'SID');
+			$pl = new User($pl->steamid(), 'SID');
 			break;
 	}
 	header("Location: /profile/".$lnk[1]);
@@ -250,7 +323,8 @@ if (!$db->num_rows($pl_exams)) {
 }
 $pl_exams = ob_get_clean();
 
-$page_fucking_title = _("Профиль пользователя - ") . $pl->take_steam_info("nickname");
+$page_title = _("Профиль пользователя - ") . $pl->take_steam_info("nickname");
+$page_description = _("Профиль пользователя - ") . $pl->take_steam_info("nickname");
 include Base::PathTPL("header");
 include Base::PathTPL("left_side");
 

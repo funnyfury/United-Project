@@ -11,7 +11,7 @@
                         <div class="five wide column" align="right">
                           <div class="ui horizontal list">
                             <div class="item">
-							  <?php if (!$ticket['viewed']) { ?><div class="ui small green horizontal label"><?php echo _('Новый') ?></div><?php }?>
+							               <?php if (!$ticket['viewed']) { ?><div class="ui small green horizontal label"><?php echo _('Новый') ?></div><?php }?>
                               #<?php echo $ticket['tid']?>
                             </div>
                           </div>
@@ -26,7 +26,7 @@
                       <form method="post">
                         <input type="hidden" name="id" value="<?php echo $ticket['tid']?>">
                         <div class="ui middle aligned horizontal list" style="margin-top: 0.5rem; display: block;">
-					      <?php if ($ticket['type'] != 4) { ?>
+					               <?php if ($ticket['type'] != 4) { ?>
                           <div class="item">
                             <div class="ui mini buttons">
                               <button type="submit" name="status" value="0" class="ui compact primary icon button">
@@ -60,7 +60,7 @@
                             </button>
                           </div>
                         </div>
-					  </form>
+					            </form>
                     </div>
                   </div>
                 </div>

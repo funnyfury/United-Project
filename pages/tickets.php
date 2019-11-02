@@ -4,7 +4,8 @@ if (!$logged_user) {
 	exit();
 }
 
-$page_fucking_title = _("Тикеты");
+$page_title = "Тикеты";
+$page_description = "Оставить тикет администраторам базы данных Novostroi";
 include Base::PathTPL("header");
 include Base::PathTPL("left_side");
 

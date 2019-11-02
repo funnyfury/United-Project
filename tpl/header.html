@@ -1,51 +1,42 @@
 <!DOCTYPE html>
 <html lang="ru">
   <head>
-	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Metrostroi &raquo; <?php echo $page_fucking_title?></title>
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="<?php echo $page_description ?>"/>
+    
+    <title>Edited - <?php echo $page_title ?></title>
 
-    <link rel="stylesheet" href="/dist/semantic4.css" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link href="../dist/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="../dist/custom.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://unpkg.com/tippy.js@2.0.4/dist/tippy.all.min.js"></script>
-    <script src="/dist/semantic.js"></script>
-    <!--<script src="/kek"></script>-->
-	<link rel="stylesheet" href="https://atomiks.github.io/tippyjs/tippy/themes.css" type="text/css">
-	<?php if ($lnk[0] == 'servers') { ?>
-	<script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/highcharts-3d.js"></script>
-	<?php } ?>
-	<link rel="stylesheet" href="/tpl/css/style2.css" type="text/css">
-	<style>
-      .ui.search > .results > .message .header:before {
-        visibility: visible;
-        content: '<?php echo _('Нет совпадений') ?>';
-      }
-	</style>
-    <script type="text/javascript">
-        var _paq = _paq || [];
-        _paq.push(['trackPageView']);
-        _paq.push(['enableLinkTracking']);
-		<?php if ($logged_user) {?>_paq.push(["setUserId","<?php echo $logged_user->steamid() ?>"]);
-<?php } ?>
-        (function() {
-            var u="//anal.metrostroi.net/";
-            _paq.push(['setTrackerUrl', u+'piwik.php']);
-            _paq.push(['setSiteId', '1']);
-            var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-            g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
-        })();
-    </script>
+    <!--  Scripts-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="../dist/materialize.min.js"></script>
+    <!--script type="text/javascript" src="../dist/init.js"></script-->
   </head>
+  <body>
+   <nav class="white" role="navigation">
+    <div class="nav-wrapper container">
+      <a id="logo-container" href="/" class="brand-logo">Главная</a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="/news">Новости</a></li>
+        <li><a href="/players">Игроки</a></li>
+        <li><a href="/servers">Сервера</a></li>
+        <li><a href="/bans">Блокировки</a></li>
+      </ul>
 
-  <body style="display: flex; min-height: 100vh; flex-direction: column;">
-    <div class="ui container" style="flex: 1;">
-      <div class="ui fixed inverted menu">
-        <div class="ui container">
-          <?php echo $menu->show('menu', $show_login) ?>
-        </div>
-      </div>
-      <div class="ui main container">
-        <div class="ui stackable grid">
-          <div class="five wide column">
+      <ul id="nav-mobile" class="sidenav">
+        <li><a href="/news">Новости</a></li>
+        <li><a href="/players">Игроки</a></li>
+        <li><a href="/servers">Сервера</a></li>
+        <li><a href="/bans">Блокировки</a></li>
+      </ul>
+      <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+    </div>
+   </nav>
+    <div class="ui container pusher">
+      <div class="ui stackable grid">
+        <div class="four wide column">

@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="ru">
   <head>
-    <title>Metrostroi &raquo; 403</title>
-
-    <link rel="stylesheet" href="/dist/semantic4.css" type="text/css">
+    <title>Novostroi - 403</title>
+    <link rel="stylesheet" href="/dist/semantic.css" type="text/css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="/dist/semantic.js"></script>
@@ -71,21 +70,24 @@
       }
     </style>
   </head>
-
   <body>
+    <audio autoplay>
+      <source src="tpl/sound/02070.mp3" type="audio/mpeg">
+      Тег audio не поддерживается вашим браузером. 
+    </audio>
     <div class="ui middle aligned center aligned grid">
       <div class="column">
         <div class="ui container" id="error-box">
           <h1>
             <span>403</span>
-            <?php echo _('В доступе отказано') ?>
+            <?php echo _('Ой!') ?>
           </h1>
 
           <p class="ui container">
-            Достоверно неизвестно каким образом вы оказались на этой странице, но мы точно можем сказать, что доступа у вас к ней нет. Предлагаем вам <span id="error-action">вернуться на главную</span>.
+            Вы не должны были сюда попасть но, раз уж попали, вернём вас <span id="error-action"></span>
           </p>
 
-          <a class="ui huge blue button" id="error-button" href="/"><?php echo _('Перейти на главную') ?></a>
+          <a class="ui huge blue button" id="error-button" href="/"><?php echo _('Вернуться') ?></a>
         </div>
       </div>
     </div>
@@ -94,8 +96,8 @@
       if (history.length == 1)
         $('#error-button').attr('href', '/');
       else {
-        $('#error-action').html('<?php echo _('вернуться назад') ?>');
-        $('#error-button').html('<?php echo _('Вернуться назад') ?>');
+        $('#error-action').html('<?php echo _('назад') ?>');
+        $('#error-button').html('<?php echo _('Назад') ?>');
         $('#error-button').attr('href', 'javascript:history.back()');
       }
     </script>

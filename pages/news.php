@@ -1,5 +1,5 @@
 <?php
-$menu->set_item_active('news');
+$page_description = "Новости базы данных Novostroi";
 $admin_mode = ($logged_user and $logged_user->max_icon_id() >= 9);
 if (!isset($lnk[1])) $lnk[1] = 1;
 switch ($lnk[1]) {
@@ -8,24 +8,19 @@ switch ($lnk[1]) {
 			include ROOT . "pages/404.php";
 			exit();
 		}
-
 		$query = $db->execute("SELECT `news`.*, `user_info_cache`.`nickname`, `news_cats`.`name` FROM `news` LEFT JOIN `news_cats` ON `news_cats`.`id`=`news`.`cat` LEFT JOIN `user_info_cache` ON `user_info_cache`.`steamid`=`news`.`author` WHERE `news`.`id`='{$db->safe($lnk[2])}'");
 		if ($db->num_rows($query) != 1) {
 			include ROOT . "pages/404.php";
 			exit();
 		}
 		$query = $db->fetch_array($query);
-
 		Base::TakeClass('comments');
-		$page_fucking_title = $query['title'] . _(" - Новости Метростроя");
+		$page_fucking_title = $query['title'];
 		include Base::PathTPL("header");
 		include Base::PathTPL("left_side");
-
 		// Убираем &lt;cut&gt; и прочую срань
-		$query['text'] = str_replace(array('<cut>', '</cut>', '&lt;cut&gt;'), '', $query['text']);
-
+		$query['text'] = str_replace(array('<cut>', '</cut>'), '', $query['text']);
 		include Base::PathTPL("news/news_view");
-
 		include Base::PathTPL("right_side");
 		if ($admin_mode)
 		{
@@ -48,7 +43,6 @@ switch ($lnk[1]) {
 	default:
 		$num_by_page = 8;
 		if (!isset($lnk_index)) $lnk_index = 1;
-		if (!isset($where)) $where = " WHERE `news_cats`.`lang` = '{$locale}'";
 		if (!isset($url)) $url = '/news/';
 		$page = (isset($lnk[$lnk_index]) and ((int) $lnk[$lnk_index]) > 0)? ((int) $lnk[$lnk_index]): 1;
 		$first = ($page - 1) * $num_by_page;
@@ -59,11 +53,11 @@ switch ($lnk[1]) {
 		}
 		if ($page <= 1)
 		{
-			$page_fucking_title = _("Новости");
+			$page_title = _("Новости");
 		}
 		else
 		{
-			$page_fucking_title = _("Новости - Страница ") . $page;
+			$page_title = _("Новости - Страница ") . $page;
 		}
 		include Base::PathTPL("header");
 		include Base::PathTPL("left_side");
@@ -73,11 +67,9 @@ switch ($lnk[1]) {
 			$newsarr[] = $query;
 			include Base::PathTPL("news/news_preview");
 		}
-
 		$query = $db->execute("SELECT COUNT(*) FROM `news` LEFT JOIN `news_cats` ON `news_cats`.`id`=`news`.`cat`$where");
 		$query = $db->fetch_array($query);
 		echo Base::GeneratePagination($page, $num_by_page, $query[0], $url);
-
 		include Base::PathTPL("right_side");
 		
 		if ($admin_mode)

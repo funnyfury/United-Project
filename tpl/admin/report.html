@@ -1,0 +1,7 @@
+<div class="panel panel-default">
+	<div class="panel-heading">№<?php echo $pl_warn['id'] ?> | Дата: <?php echo date("H:i:s - d/m/Y", $pl_warn['date']) ?> | Проказник: <a href="/profile/<?php echo $pl_warn['target'] ?>"><?php echo ($pl_warn['nickname'] == null)? $pl_warn['target']: $pl_warn['nickname'] ?></a> | Сервер: <?php echo htmlspecialchars($pl_warn['server']) ?> | Стукач: <a href="/profile/<?php echo htmlspecialchars($pl_warn['author']) ?>"><?php echo htmlspecialchars($pl_warn['author']) ?></a></div>
+	<div class="panel-body">
+		<?php echo nl2br(htmlspecialchars($pl_warn['text'])) ?>
+		<p><a class="btn btn-xs btn-danger" href="/admin_reports/<?php echo $pl_warn['id'] ?>"><i class="fa fa-trash"></i> Удалить</a></p>
+	</div>
+</div>

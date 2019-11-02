@@ -1,0 +1,35 @@
+            	<div class="jumbotron">
+		            <h1>Что делаем?</h1>
+		            <?php if($logged_user and $logged_user->take_group_info('change_group')) { ?><a href="/player_edit" class="ui green button" style="margin-top: 0.5em;"><i class="edit icon"></i>Меняем звание</a><?php } ?>
+		            <?php if($logged_user and $logged_user->take_group_info('blacklist_edit')) { ?><a href="/nf_edit" class="ui yellow button" style="margin-top: 0.5em;"><i class="plane icon"></i>Выдаем Novostroi Future</a><?php } ?>
+		            <?php if($logged_user and $logged_user->take_group_info('blacklist_edit')) { ?><a href="/blacklist_edit" class="ui red button" style="margin-top: 0.5em;"><i class="shield icon"></i>Добавляем в Blacklist</a><?php } ?>
+		            <?php if($logged_user and $logged_user->take_group_info('edit_tests')) { ?><a href="/news_add" class="ui grey button" style="margin-top: 0.5em;"><i class="plus icon"></i>Добавляем новость</a><?php } ?>
+		            <?php if($logged_user and $logged_user->take_group_info('mag_reports')) { ?><a href="/admin_nvr" class="ui orange button" style="margin-top: 0.5em;"><i class="ban icon"></i>Чекаем Жалобы</a><?php } ?>
+		            <?php if($logged_user and $logged_user->take_group_info('tickets')) { ?><a href="/admin_tickets" class="ui violet button" style="margin-top: 0.5em;"><i class="ticket icon"></i>Чекаем тикеты</a><?php } ?>
+		            <?php if($logged_user and $logged_user->take_group_info('up_down')) { ?><a href="/admin_tests" class="ui blue button" style="margin-top: 0.5em;"><i class="checkmark box icon"></i>Чекаем тесты</a><?php } ?>
+		            <?php if($logged_user and $logged_user->take_group_info('log')) { ?><a href="/admin_log" class="ui grey button" style="margin-top: 0.5em;"><i class="book icon"></i>Смотрим логи</a><?php } ?>
+		            <?php if($logged_user and $logged_user->take_group_info('edit_tests')) { ?><a href="/admin_questions" class="ui pink button" style="margin-top: 0.5em;"><i class="question icon"></i>Чекаем вопросы</a><?php } ?>
+                <?php if($logged_user and $logged_user->take_group_info('up_down')) { ?><a href="/admin_session" class="ui button" style="margin-top: 0.5em;background-color: #ff2f00;color:white;"><i class="subway icon"></i>Чекаем заявки на сессию</a><?php } ?>
+                <?php if($logged_user and $logged_user->take_group_info('up_down')) { ?><a href="/admin_servers" class="ui brown button" style="margin-top: 0.5em;"><i class="server icon"></i>Проверяем сервера</a><?php } ?>
+	            </div>
+              	<div class="ui container">
+	              	<center><p style="font-size: 1.2em;">Точно московское время: </p><p style="font-size: 1.2em;" id="timedisplay"></p></center>
+              	</div>
+              	<script>
+              		function getDate() {
+        				var date = new Date();
+        				var hours = date.getHours();
+        				var minutes = date.getMinutes();
+        				var seconds = date.getSeconds();
+        				//Фурииииииии, если ты это зыркаешь, условие ниже ставит нолик если секунд меньше 10. Если нужно буит сделай с часами и минутами
+        				if(seconds < 10) {
+          					seconds = '0' + seconds;
+        				};
+
+        				if(minutes < 10) {
+          					minutes = '0' + minutes;
+        				}
+        				document.getElementById('timedisplay').innerHTML = hours + ':' + minutes + ':' + seconds;
+      				}
+      				setInterval(getDate, 0);
+  				</script>

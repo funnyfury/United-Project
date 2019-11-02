@@ -1,5 +1,5 @@
             <div class="ui segment" style="min-height: 8rem; margin-bottom: 2rem !important;">
-              <div class="ui top attached label"><i class="write icon"></i> <?php echo $page_fucking_title ?></div>
+              <div class="ui top attached label"><i class="write icon"></i> <?php echo $page_title ?></div>
 
               <form method="post">
                 <div class="ui container">
@@ -10,12 +10,11 @@
                         <input type="text" name="title" placeholder="<?php echo _('Название новости') ?>" value="<?php echo $title ?>">
 
                         <div class="ui basic floating dropdown button">
-						  <input type="hidden" name="cat">
+                          <input type="hidden" name="cat">
                           <div class="text"><?php echo isset($cat_name)?$cat_name:_('Категория')?></div>
 
-                          <i class="dropdown icon"></i>
                           <div class="menu" name="cat">
-							<?php echo $cats_select ?>
+                          <?php echo $cats_select ?>
                           </div>
                         </div>
                       </div>
@@ -47,7 +46,7 @@
                 </div>
               </form>
             </div>
-			
+      
           <script src="/tpl/js/tinymce/tinymce.min.js"></script>
           <script>
             tinymce.init({

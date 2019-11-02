@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="ru">
   <head>
-    <title>Metrostroi &raquo; 404</title>
+    <title>Novostroi - 404</title>
 
-    <link rel="stylesheet" href="/dist/semantic4.css" type="text/css">
+    <link rel="stylesheet" href="/dist/semantic.css" type="text/css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="/dist/semantic.js"></script>
@@ -78,14 +78,14 @@
         <div class="ui container" id="error-box">
           <h1>
             <span>404</span>
-            <?php echo _('Страница не найдена') ?>
+            <?php echo _('Ой!') ?>
           </h1>
 
           <p class="ui container">
-            Хьюстон, у нас проблема, по нашим данным у нас нет такой страницы. Единственным разумным для вас выходом будет <span id="error-action">вернуться на главную</span>.
+            Вы видимо не туда попали, но могу вернуть вас на страницу <span id="error-action"></span>.
           </p>
 
-          <a class="ui huge blue button" id="error-button" href="/"><?php echo _('Перейти на главную') ?></a>
+          <a class="ui huge blue button" id="error-button" href="/"><?php echo _('Вернуться') ?></a>
         </div>
       </div>
     </div>
@@ -94,8 +94,8 @@
       if (history.length == 1)
         $('#error-button').attr('href', '/');
       else {
-        $('#error-action').html('<?php echo _('вернуться назад') ?>');
-        $('#error-button').html('<?php echo _('Вернуться назад') ?>');
+        $('#error-action').html('<?php echo _('назад') ?>');
+        $('#error-button').html('<?php echo _('Назад') ?>');
         $('#error-button').attr('href', 'javascript:history.back()');
       }
     </script>

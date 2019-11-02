@@ -1,0 +1,19 @@
+      <?php
+		                $iconsarr = (is_array(json_decode($player['icon'])))? json_decode($player['icon']): array((object) array('id' => $player['icon']));;
+                  ?>
+            <table class="striped">
+              <thead>
+                <tr>
+                    <th>Никнейм</th>
+                    <th>Погоны</th>
+                    <th>Ранг</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><a href="/profile/<?php echo $player['SID'] ?>"><?php echo (($player['nickname'] != NULL)?  $player['nickname']: $player['SID']) ?></a><a class="blacklink" href="<?php echo ("http://steamcommunity.com/profiles/" . Base::ToCommunityID($player['SID'])) ?>"><i class="steam symbol icon"></i></a><?php echo User::ShowIcons($iconsarr) ?></td>
+                  <td><?php if (User::ShowRankIcon($player['txtid'])) { ?><img class="ui image" src="<?php echo User::ShowRankIcon($player['txtid']) ?>" height="25" width="40" ><?php } ?> </td>
+                  <td><?php echo $groups[$player['txtid']] ?></td>
+                </tr>
+              </tbody>
+            </table>

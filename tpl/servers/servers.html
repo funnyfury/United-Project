@@ -1,0 +1,14 @@
+         <table class="striped">
+              <thead>
+                <tr>
+                    <th>Название</th>
+                    <th>Онлайн</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><?php echo htmlspecialchars($server['name']) ?> ( <a href="/profile/<?php echo $server['steamid'] ?>"><?php echo ($server['nickname'] != NULL)? htmlspecialchars($server['nickname']): $server['steamid'] ?></a> <a href="<?php echo "http://steamcommunity.com/profiles/" . Base::ToCommunityID($server['steamid']) ?>"><i class="steam icon" style="margin: 0 !important;"></i></a>)</td>
+                  <td><a href="steam://connect/<?php echo $server['ip'].":".$server['port'] ?>"><?php echo $server['ip'].":".$server['port'] ?></a></td>
+                </tr>
+              </tbody>
+            </table>

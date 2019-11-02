@@ -1,11 +1,11 @@
 <?php
 if (!$logged_user or !$logged_user->take_group_info("log")) {
-	include MITRASTROI_ROOT . "pages/403.php";
+	include ROOT . "pages/403.php";
 	exit();
 }
 $amount_by_page = 25;
-$page_fucking_title = _("Журнал действий");
-$menu->set_item_active('admin_log');
+$page_title = "Журнал действий";
+
 include Base::PathTPL("header");
 include Base::PathTPL("left_side");
 $page = (!isset($lnk[1]) or $lnk[1] <= 0)? 1: (int) $lnk[1];

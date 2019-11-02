@@ -1,17 +1,7 @@
         </div>
       </div>
     </div>
-
-    <div class="ui inverted vertical footer segment">
-      <div class="ui center aligned container">
-        <div class="ui container">
-          Mod by Black Phoenix, glebqip and oldy, site by Serpentiel, HellReach and PolarWolf<br>
-          <?php echo _("Любое копирование сайта, или информации с него как полностью, так и частично категорически запрещено.") ?>
-        </div>
-      </div>
-    </div>
-
-	<?php if (isset($show_other)) echo $show_other; ?>
+	  <?php if (isset($show_other)) echo $show_other; ?>
     <script>
       function getNumberForm(number, forms) {
         number = Math.abs(number);
@@ -63,6 +53,13 @@
         arrow: true,
         arrowTransform: 'scale(0.75) translateY(-1.5px)',
         animation: 'fade'
+      });
+
+      btn = $('.icon-menu'),
+
+      btn.on('click', function() {
+        $('.sidebar')
+          .sidebar('toggle')
       });
     </script>
   </body>

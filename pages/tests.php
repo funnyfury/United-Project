@@ -5,10 +5,10 @@ if (!$logged_user) {
 }
 
 $statuses = array(
-	_('Не начат'),
-	_('Начат'),
-	_('На проверке'),
-	_('Проверен')
+	_('Не был начат'),
+	_('Был начат'),
+	_('Находится на проверке'),
+	_('Был проверен')
 );
 
 $rating = array(
@@ -33,7 +33,7 @@ $marks_color = array(
 
 if (!isset($lnk[1]) or $lnk[1]=='') {
 	if(isset($_GET['take'])) {
-		$query = $db->execute("SELECT * FROM `tests_results` WHERE `student`='{$logged_user->steamid()}' AND (`recived_date` > NOW() - INTERVAL 1 DAY OR `status`<2)");
+		$query = $db->execute("SELECT * FROM `tests_results` WHERE `student`='{$logged_user->steamid()}' AND (`recived_date` > NOW() - INTERVAL 3 HOUR OR `status`<2)");
 		if(!$db->num_rows($query)) {
 			$test = Base::GenerateTest($_GET['take']);
 			if ($test) {
@@ -66,7 +66,7 @@ if (!isset($lnk[1]) or $lnk[1]=='') {
 		$db->execute("UPDATE `tests_results` SET `status`=1, `recived_date`=NOW() WHERE `trid`='{$db->safe($test['trid'])}'");
 }
 
-$page_fucking_title = _("Мои тесты");
+$page_title = _("Мои тесты");
 include Base::PathTPL("header");
 include Base::PathTPL("left_side");
 

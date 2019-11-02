@@ -4,8 +4,7 @@ if (!$logged_user or !$logged_user->take_group_info("tickets")) {
 	exit();
 }
 
-$page_fucking_title = _("Управление тикетами");
-$menu->set_item_active('admin_tickets');
+$page_title = "Управление тикетами";
 include Base::PathTPL("header");
 include Base::PathTPL("left_side");
 
@@ -16,7 +15,7 @@ if (isset($lnk[1])) {
 		include Base::PathTPL("footer");
 		exit();
 	}
-	//include Base::PathTPL("tickets/adm_info");
+	include Base::PathTPL("tickets/adm_info");
 	include Base::PathTPL("tickets/adm_ticket_add");
 	if (isset($_POST['message'])) {
 		$db->execute("INSERT INTO `tickets` (`written`,`owner`,`text`,`date`,`type`,`viewed`) VALUES ('{$logged_user->steamid()}','{$pl->steamid()}','{$db->safe($_POST['message'])}',NOW(),4,0)");

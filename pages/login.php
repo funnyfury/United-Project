@@ -6,7 +6,7 @@ if($logged_user) {
 }
 try {
 	$redirect = (isset($_GET['rdrct']))? $_GET['rdrct']: '';
-	$openid = new LightOpenID('https://' . $_SERVER['SERVER_NAME'] . '/login?rdrct='.$redirect);
+	$openid = new LightOpenID('http://' . $_SERVER['SERVER_NAME'] . '/login?rdrct='.$redirect);
 	if (!$openid->mode) {
 		if (isset($_GET['login'])) {
 			$openid->identity = 'http://steamcommunity.com/openid/?l=english';
@@ -23,11 +23,9 @@ try {
 			$ptn = "/^https:\/\/steamcommunity\.com\/openid\/id\/(7[0-9]{15,25}+)$/";
 			preg_match($ptn, $id, $matches);
 //			echo "User is logged in (steamID: $matches[1])\n";
-
 			$url = "http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=$_STEAMAPI&steamids=$matches[1]";
 			$json_object = file_get_contents($url);
 			$json_decoded = json_decode($json_object);
-
 			foreach ($json_decoded->response->players as $player) {
 				/*echo "
                     <br/>Player ID: $player->steamid
@@ -54,7 +52,6 @@ try {
 				$db->execute("INSERT INTO `login_log` (`SID`, `ip`) VALUES ('" . $db->safe(Base::ToSteamID($player->steamid)) . "', '".Base::GetRealIp()."')");
 				header("Location: /$redirect");
 			}
-
 		} else {
 			header("Location: /$redirect");
 		}

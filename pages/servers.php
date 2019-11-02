@@ -26,41 +26,20 @@ $maps = array(
     'gm_smr_first_line_a' => 1163651619
 );
 
-$page_fucking_title = _("Список партнерских серверов");
+$page_title = _("Список партнерских серверов");
 $menu->set_item_active('servers');
 include Base::PathTPL("header");
 include Base::PathTPL("left_side");
 $where = ($logged_user)?($logged_user->take_group_info("admin_panel"))?"":" AND `active`=1 AND `show_for_everyone`=1 OR `owner`='{$logged_user->steamid()}'":" AND `active`=1 AND `show_for_everyone`=1";
 $query = $db->execute("SELECT `server_id`,`name`,`ip`,`port`,`name`,`owner`,`show_for_everyone`,`active`,`deleted`,`status`,`maxplayers`,`wagons`,`maxwagons`,`map`,`mapstats`,`user_info_cache`.* FROM `servers_info` LEFT JOIN `user_info_cache` ON `user_info_cache`.`steamid`=`servers_info`.`owner` WHERE `deleted` = 0 $where ORDER BY `servers_info`.`server_id`") or die($db->error());
-Base::TakeTPL("servers/servers_head");
 $servers2 = array();
 while($server = $db->fetch_array($query)) {
 	$players = $db->execute("SELECT * FROM `groups`, `players` LEFT JOIN `user_info_cache` ON `user_info_cache`.`steamid`=`players`.`SID` WHERE `server_id` = '{$server['server_id']}' AND `players`.`group`=`groups`.`txtid` ORDER BY `groups`.`id` ASC, `user_info_cache`.`nickname` ASC");
 	$online = ($server['status']);
 	$servers2[] = array('server'=>$server,'players'=>$players);
-	include Base::PathTPL("servers/server_row");
+	include Base::PathTPL("servers/servers");
 }
-Base::TakeTPL("servers/servers_foot");
 include Base::PathTPL("right_side");
-
-ob_start();
-foreach ($servers2 as $serverarr) {
-	$players = $serverarr['players'];
-	$server = $serverarr['server'];
-	if ($server['server_id'] <= 1) continue;
-	$online = ($server['status']);
-    include Base::PathTPL("servers/server_modal");
-}
-echo '<script>';
-foreach ($servers2 as $serverarr) {
-	$players = $serverarr['players'];
-	$server = $serverarr['server'];
-	if ($server['server_id'] <= 1) continue;
-	$online = ($server['status']);
-    include Base::PathTPL("servers/server_scripts");
-}
-echo '</script>
-';
 $show_other = ob_get_contents();
 ob_end_clean();
 include Base::PathTPL("footer");

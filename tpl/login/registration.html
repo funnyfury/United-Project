@@ -1,0 +1,81 @@
+<div class="ui form segment">
+  <form method="post">
+    <div class="ui form">
+      <h4 class="ui dividing header">Регистрация</h4>
+      <div class="field">
+        <div class="two fields">
+          <div class="field">
+            <label>Логин</label>
+            <input type="text" name="login" placeholder="Mashonka1337" value="<?php echo $login ?>">
+          </div>
+          <div class="field">
+            <label>SteamID</label>
+            <input type="text" name="steamid" placeholder="STEAM_X:X:XXXXXXXXXX" value="<?php echo $steamid ?>">
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <div class="two fields">
+          <div class="field">
+            <label>Пароль</label>
+            <input type="password" name="password" value="<?php echo $password ?>">
+          </div>
+          <div class="field">
+            <label>Пароль ещё раз</label>
+            <input type="password" name="passwordtwo" value="<?php echo $password ?>">
+          </div>
+        </div>
+      </div>
+      <button class="ui submit green button" name="submit" type="submit">Зарегестрироваться</button>
+      <div class="ui error message"></div>
+    </div>
+  </form>
+</div>
+<script>
+$('.ui.form')
+  .form({
+    fields: {
+      login: {
+        identifier: 'login',
+        rules: [
+          {
+            type   : 'empty',
+            prompt : 'Введите логин!'
+          }
+        ]
+      },
+      steamid: {
+        identifier: 'steamid',
+        rules: [
+          {
+            type   : 'minLength[10]',
+            prompt : 'Введите SteamID'
+          }
+        ]
+      },
+      password: {
+        identifier: 'password',
+        rules: [
+          {
+            type   : 'empty',
+            prompt : 'Введите пароль!'
+          },
+          {
+            type   : 'minLength[5]',
+            prompt : 'Пароль должен состоят из 5 символов!'
+          }
+        ]
+      },
+      passwordtwo: {
+        identifier: 'passwordtwo',
+        rules: [
+          {
+            type   : 'empty',
+            prompt : 'Введите повторный пароль!'
+          }
+        ]
+      }
+    }
+  })
+;
+</script>

@@ -1,9 +1,8 @@
 <?php
-if (!$logged_user or $logged_user->max_icon_id() < 9) {
+if (!$logged_user or !$logged_user->take_group_info("news_add")) {
 	include ROOT . "pages/403.php";
 	exit();
 }
-
 $add = !(isset($lnk[1]) and (int) $lnk[1]);
 
 if (!$add) {
@@ -46,8 +45,7 @@ while ($tmp_cat = $db->fetch_array($query)) {
 	$cats_select .= "<div class=\"item".(($cat == $tmp_cat['id'])?' selected item':'')."\" data-value=\"{$tmp_cat['id']}\">{$tmp_cat['name']}</div>";
 }
 
-$page_fucking_title = ($add)? _('Добавление новости'):_('Редактирование новости');
-$menu->set_item_active('news_add');
+$page_title = ($add)? _('Добавление новости'):_('Редактирование новости');
 include Base::PathTPL("header");
 include Base::PathTPL("left_side");
 

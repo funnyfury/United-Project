@@ -1,10 +1,10 @@
 <?php
 $config = array(
-	"db_base" => "metrostroi",
-	"db_host" => "185.4.75.45",
-	"db_user" => "metrostroi",
-	"db_pass" => "e41k94a71Q6i41p3",
+	"db_base" => "keks",
+	"db_host" => "localhost",
+	"db_user" => "root",
+	"db_pass" => "",
 	"db_port" => 3306,
 
-	"steam_api_key" => "6A6692EB46C8144521C5C79A5FCE56EB"
+	"steam_api_key" => "5E1A146FB6D2FF45F22D58045ACA7F27"
 );

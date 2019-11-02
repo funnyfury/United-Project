@@ -4,8 +4,7 @@ if (!$logged_user or !$logged_user->take_group_info("edit_tests")) {
 	exit();
 }
 
-$menu->set_item_active('admin_questions');
-$page_fucking_title = _("Управление тестами");
+$page_title = _("Управление тестами");
 include Base::PathTPL("header");
 include Base::PathTPL("left_side");
 
@@ -68,7 +67,7 @@ switch ($lnk[1]) {
 			$db->execute("INSERT INTO `tests` (`tname`, `tpriority`, `questions_cats`)"
 					   . "VALUES ('{$db->safe($_POST['name'])}','{$db->safe($_POST['priority'])}','{$db->safe($qcats)}')") or die($db->error());
 			Logger::Log(16, 0, '', array('name'=>$db->safe($_POST['name']),'id'=>$db->insert_id()), $logged_user->steamid());
-//			header("Location /admin_questions/");
+			header("Location /admin_questions/");
 		}
 		$cats = $db->execute("SELECT * FROM `questions_cats`");
 		if (!$db->num_rows($cats)) {
@@ -85,8 +84,8 @@ switch ($lnk[1]) {
 			$db->execute("INSERT INTO `questions_cats` (`qcname`) VALUES ('{$db->safe($_POST['name'])}')") or die($db->error());
 			Logger::Log(15, 0, '', array('name'=>$db->safe($_POST['name']),'id'=>$db->insert_id()), $logged_user->steamid());
 		}
-		header('Location: /admin_tests');
-		//include Base::PathTPL("tests/admin/qaddcat");
+		//header('Location: /admin_tests');
+		include Base::PathTPL("tests/admin/qaddcat");
 		break;
 	default:
 		if (isset($_POST['qcname']))
@@ -145,3 +144,4 @@ switch ($lnk[1]) {
 
 include Base::PathTPL("right_side");
 include Base::PathTPL("footer");
+?>
